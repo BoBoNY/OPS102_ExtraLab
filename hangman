@@ -81,3 +81,13 @@ printHangman
 
 #blankDisplay
 #checkGuess
+
+function blankDisplay() {
+	blank=""
+	for ((i=0;i<$wordCount;i++)){
+		blank="${blank}_ "
+	}
+	echo $blank
+}
+
+blankDisplay

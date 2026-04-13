@@ -1,0 +1,83 @@
+#!/usr/bin/bash
+
+secretWord=$(shuf -n 1 ./words)
+found=0
+guessUsed=0
+
+echo $secretWord
+wordCount=$(($(echo $secretWord | wc -c)-1))
+echo $wordCount
+function printHangman() {
+	case $guessUsed in
+        0)
+            echo "  +---+"
+            echo "  |   |"
+            echo "      |"
+            echo "      |"
+            echo "      |"
+            echo "      |"
+            echo "========="
+            ;;
+        1)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo "      |"
+            echo "      |"
+            echo "      |"
+            echo "========="
+            ;;
+        2)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo "  |   |"
+            echo "      |"
+            echo "      |"
+            echo "========="
+            ;;
+        3)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo " /|   |"
+            echo "      |"
+            echo "      |"
+            echo "========="
+            ;;
+        4)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo " /|\  |"
+            echo "      |"
+            echo "      |"
+            echo "========="
+            ;;
+        5)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo " /|\  |"
+            echo " /    |"
+            echo "      |"
+            echo "========="
+            ;;
+        6)
+            echo "  +---+"
+            echo "  |   |"
+            echo "  O   |"
+            echo " /|\  |"
+            echo " / \  |"
+            echo "      |"
+            echo "========="
+            ;;
+    esac
+}
+
+printHangman
+printHangman
+
+
+#blankDisplay
+#checkGuess

@@ -1,16 +1,14 @@
 #!/usr/bin/bash
 
 secretWord=$(shuf -n 1 ./words)
-found=0
 guessUsed=0
-
-blank=""
-guessWord="a"
-newDisplay=""
+guessWord=""
+display=""
 
 echo $secretWord
 wordCount=$(($(echo $secretWord | wc -c)-1))
 echo $wordCount
+
 function printHangman() {
 	case $guessUsed in
         0)
@@ -80,37 +78,55 @@ function printHangman() {
 }
 
 function blank(){
+	display=""
 	for ((i=0;i<$wordCount;i++)){
-		blank="${blank}_ "
+		display="${display}_"
 	}
 }
 
 checkGuess(){
 	found=0
+	newDisplay=""
 	for ((i=1;i<=$wordCount;i++)){
 		currentChar="$(echo $secretWord | cut -c $i)"
-		oldChar="$(echo $blank | cut -c $i)"
+		oldChar="$(echo $display | cut -c $i)"
 
-		if $currentChar == $guessWord
+		if [ "$currentChar" == "$guessWord" ]
 		then
 			newDisplay="${newDisplay}$guessWord"
 			found=1
 		else
 			newDisplay="${newDisplay}$oldChar"
-			found=0
 		fi	
 	}
 	
-	if $found -eq 0
+	display="$newDisplay"	
+
+	if [[ found -eq 0 ]] 
 	then
 		guessUsed=$((guessUsed+1))
 	
 	fi
-	echo guess Used = $guessUsed
 }
 
 
 showStats(){
-	echo Word: $newDisplay
+	echo Word: $display
 	echo Wrong guesses used: $guessUsed
 }
+
+blank
+
+until [[ $guessUsed -eq 6 ]]
+do
+        echo =================================
+	echo           Hangman Game
+	echo =================================
+
+	printHangman
+
+	showStats
+
+	read -p "Enter one alphabet: " guessWord
+	checkGuess
+done 

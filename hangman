@@ -4,6 +4,10 @@ secretWord=$(shuf -n 1 ./words)
 found=0
 guessUsed=0
 
+blank=""
+guessWord="a"
+newDisplay=""
+
 echo $secretWord
 wordCount=$(($(echo $secretWord | wc -c)-1))
 echo $wordCount
@@ -75,19 +79,34 @@ function printHangman() {
     esac
 }
 
-printHangman
-printHangman
-
-
-#blankDisplay
-#checkGuess
-
-function blankDisplay() {
-	blank=""
+function blank(){
 	for ((i=0;i<$wordCount;i++)){
 		blank="${blank}_ "
 	}
-	echo $blank
 }
 
-blankDisplay
+checkGuess(){
+	found=0
+	for ((i=1;i<=$wordCount;i++)){
+		currentChar="$(echo $secretWord | cut -c $i)"
+		oldChar="$(echo $blank | cut -c $i)"
+
+		if $currentChar == $guessWord
+		then
+			newDisplay="${newDisplay}$guessWord"
+			found=1
+		else
+			newDisplay="${newDisplay}$oldChar"
+			found=0
+		fi	
+	}
+	
+	if $found -eq 0
+	then
+		guessUsed=$((guessUsed+1))
+	
+	fi
+	echo guess Used = $guessUsed
+}
+
+

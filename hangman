@@ -78,7 +78,6 @@ function printHangman() {
 }
 
 function blank(){
-	display=""
 	for ((i=0;i<$wordCount;i++)){
 		display="${display}_"
 	}
@@ -117,7 +116,8 @@ showStats(){
 
 blank
 
-until [[ $guessUsed -eq 6 ]]
+win=1
+until [[ $guessUsed -eq 6 || win -eq 0 ]]
 do
         echo =================================
 	echo           Hangman Game
@@ -129,4 +129,11 @@ do
 
 	read -p "Enter one alphabet: " guessWord
 	checkGuess
+
+	if [[ "$secretWord" == "$display" ]] 
+	then
+		win=0
+		echo You win with $guessUsed mistakes.
+	fi
 done 
+

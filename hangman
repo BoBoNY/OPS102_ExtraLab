@@ -110,3 +110,7 @@ checkGuess(){
 }
 
 
+showStats(){
+	echo Word: $newDisplay
+	echo Wrong guesses used: $guessUsed
+}
